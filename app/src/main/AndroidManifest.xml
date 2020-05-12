@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LoginDistribuidorActivity"></activity>
+        <activity android:name=".RegistroDistribuidorActivity"></activity>
+        <activity android:name=".RegistroUsuarioActivity" />
+        <activity android:name=".LoginDistribuidorActivity" />
         <activity android:name=".InicioActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".LauncherActivity">
