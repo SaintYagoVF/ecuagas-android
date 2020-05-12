@@ -76,8 +76,8 @@
             android:textSize="18sp" />
 
 
-        <TextView
-            android:id="@+id/btnFecha"
+        <EditText
+            android:id="@+id/txtCedulaRegistro"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/txtUsuarioRegistro"
@@ -102,7 +102,7 @@
             android:textSize="18sp" />
 
         <EditText
-            android:id="@+id/txtClave"
+            android:id="@+id/txtClaveRegistro"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="25dp"
