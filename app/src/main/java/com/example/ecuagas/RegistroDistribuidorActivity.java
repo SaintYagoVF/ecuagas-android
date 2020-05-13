@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.method.HideReturnsTransformationMethod;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -69,6 +70,32 @@ public class RegistroDistribuidorActivity extends AppCompatActivity {
                     v.getBackground().setAlpha(150);
                 }else if(event.getAction() == MotionEvent.ACTION_UP){
                     v.getBackground().setAlpha(255);
+                }
+                return false;
+            }
+        });
+
+        txtClave.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                final int DRAWABLE_LEFT = 0;
+                final int DRAWABLE_TOP = 1;
+                final int DRAWABLE_RIGHT = 2;
+                final int DRAWABLE_BOTTOM = 3;
+
+                if(event.getAction() == MotionEvent.ACTION_UP) {
+                    if(event.getRawX() >= (txtClave.getRight() - txtClave.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                        // your action here
+
+
+
+
+                        txtClave.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+
+
+
+                        return true;
+                    }
                 }
                 return false;
             }

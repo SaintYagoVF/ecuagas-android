@@ -46,7 +46,7 @@
 
 
     <EditText
-        android:id="@+id/txtloginClave"
+        android:id="@+id/txtClaveDistribuidor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="25dp"

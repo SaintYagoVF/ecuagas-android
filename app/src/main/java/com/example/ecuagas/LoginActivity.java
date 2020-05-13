@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.method.HideReturnsTransformationMethod;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -29,7 +30,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText txtCorreoUsuario, txtClaveUsuario;
 
     //FIRESTORE
-    private static final String TAG="RegistroUsuarioActivity";
+    private static final String TAG="LoginActivity";
     private static final String KEY_EMAIL="email";
     private static final String KEY_CLAVE="clave";
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -101,6 +102,33 @@ public class LoginActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+
+        txtClaveUsuario.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                final int DRAWABLE_LEFT = 0;
+                final int DRAWABLE_TOP = 1;
+                final int DRAWABLE_RIGHT = 2;
+                final int DRAWABLE_BOTTOM = 3;
+
+                if(event.getAction() == MotionEvent.ACTION_UP) {
+                    if(event.getRawX() >= (txtClaveUsuario.getRight() - txtClaveUsuario.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                        // your action here
+
+
+
+
+                        txtClaveUsuario.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+
+
+
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
     }
 
     private void loginUsuario(){
@@ -111,7 +139,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-        db.collection("Usuarios").document(email).get()
+        db.collection("Usuario").document(email).get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -190,6 +218,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Toast.makeText(LoginActivity.this,"Error al obtener código",Toast.LENGTH_LONG).show();
+                        Log.d(TAG,e.toString());
                     }
                 });
 
