@@ -12,10 +12,7 @@ public class LauncherActivity extends AppCompatActivity {
 
     //SharedPreference
     public static final String MyPREFERENCES = "MyPrefs" ;
-    public static final String Login = "loginKey";
-
-
-
+    public static final String Rol = "rolKey";
 
     SharedPreferences sharedpreferences;
 
@@ -29,12 +26,14 @@ public class LauncherActivity extends AppCompatActivity {
 
         sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 
-        if(sharedpreferences.getString(Login,"")==""){
+        if(sharedpreferences.getString(Rol,"")==""){
             startActivity(new Intent(LauncherActivity.this, InicioActivity.class));
 
-        }else{
+        }else if(sharedpreferences.getString(Rol,"").equals("Usuario")){
             startActivity(new Intent(LauncherActivity.this, MainActivity.class));
 
+        }else if(sharedpreferences.getString(Rol,"").equals("Distribuidor")) {
+            startActivity(new Intent(LauncherActivity.this, MainActivityDistribuidor.class));
         }
 
         finish();

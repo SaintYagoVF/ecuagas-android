@@ -21,7 +21,7 @@
 
 
     <EditText
-        android:id="@+id/txtLoginEmail"
+        android:id="@+id/txtCodigoDistribuidor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="25dp"
@@ -30,12 +30,12 @@
         android:layout_marginBottom="5dp"
         android:background="@color/white"
 
-        android:drawableLeft="@drawable/ic_email"
+        android:drawableLeft="@drawable/ic_usuario"
         android:drawablePadding="15dp"
         android:gravity="start"
 
-        android:hint="Email"
-        android:inputType="textEmailAddress"
+        android:hint="Código de Distribuidor"
+
         android:paddingLeft="10dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"

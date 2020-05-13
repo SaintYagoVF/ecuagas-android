@@ -128,7 +128,7 @@
 
 
         <Button
-            android:id="@+id/btnRegistroAceptar"
+            android:id="@+id/btnDistribuidorAceptar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/txtSexo"

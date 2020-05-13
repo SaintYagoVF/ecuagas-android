@@ -55,7 +55,7 @@
 
 
     <EditText
-        android:id="@+id/txtClave"
+        android:id="@+id/txtDistribuidorClave"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="25dp"
@@ -81,7 +81,7 @@
 
 
     <Button
-        android:id="@+id/btnRegistroAceptar"
+        android:id="@+id/btnDistribuidorAceptar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/txtSexo"

@@ -1,16 +1,45 @@
 package com.example.ecuagas;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
     Button btnLoginUsuario, btnRegistroUsuario;
+
+    EditText txtCorreoUsuario, txtClaveUsuario;
+
+    //FIRESTORE
+    private static final String TAG="RegistroUsuarioActivity";
+    private static final String KEY_EMAIL="email";
+    private static final String KEY_CLAVE="clave";
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+    //SharedPreference
+    public static final String MyPREFERENCES = "MyPrefs" ;
+    public static final String Rol = "rolKey";
+    public static final String Id = "idKey";
+    SharedPreferences sharedpreferences;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,9 +49,18 @@ public class LoginActivity extends AppCompatActivity {
         btnLoginUsuario=(Button)findViewById(R.id.btnLoginUsuario);
         btnRegistroUsuario=(Button)findViewById(R.id.btnRegistroUsuario);
 
+        txtCorreoUsuario=(EditText)findViewById(R.id.txtLoginEmail);
+        txtClaveUsuario=(EditText)findViewById(R.id.txtloginClave);
+
+        //SharedPreferences
+
+        sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+
         btnLoginUsuario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                loginUsuario();
 
 
 
@@ -63,5 +101,98 @@ public class LoginActivity extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    private void loginUsuario(){
+
+
+        String email=txtCorreoUsuario.getText().toString();
+        final String clave=txtClaveUsuario.getText().toString();
+
+
+
+        db.collection("Usuarios").document(email).get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                        if(documentSnapshot.exists()){
+
+                            //Map<String,Object> usuario=documentSnapshot.getData();
+
+                        String clave_firebase=documentSnapshot.getString(KEY_CLAVE);
+
+                        if(clave_firebase.equals(clave)){
+
+
+                            try {
+
+
+                                SharedPreferences.Editor editor3 = sharedpreferences.edit();
+
+                                editor3.putString(Rol,"Usuario");
+
+                                editor3.commit();
+
+
+
+                            } catch (Exception e) {
+
+
+                                e.printStackTrace();
+                            }
+
+                            try {
+
+
+                                SharedPreferences.Editor editor = sharedpreferences.edit();
+
+                                editor.putString(Id,txtCorreoUsuario.getText().toString());
+
+                                editor.commit();
+
+
+
+                            } catch (Exception e) {
+
+
+                                e.printStackTrace();
+                            }
+
+
+                            Toast.makeText(LoginActivity.this,"¡Bienvenido a Ecuagas!",Toast.LENGTH_LONG).show();
+
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+
+                            startActivity(intent);
+
+
+
+                        }else{
+                            Toast.makeText(LoginActivity.this,"La clave es incorrecta",Toast.LENGTH_LONG).show();
+                        }
+
+
+
+
+
+                        }
+                        else{
+
+                            Toast.makeText(LoginActivity.this,"No existe un usuario con el correo ingresado.",Toast.LENGTH_LONG).show();
+
+                        }
+
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(LoginActivity.this,"Error al obtener código",Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
     }
 }

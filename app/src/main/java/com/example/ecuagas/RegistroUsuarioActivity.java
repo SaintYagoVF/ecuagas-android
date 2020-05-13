@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -52,7 +53,7 @@ public class RegistroUsuarioActivity extends AppCompatActivity {
         txtCedula=(EditText)findViewById(R.id.txtCedulaRegistro);
         txtClave=(EditText)findViewById(R.id.txtClaveRegistro);
 
-        btnAceptar=(Button)findViewById(R.id.btnRegistroAceptar);
+        btnAceptar=(Button)findViewById(R.id.btnDistribuidorAceptar);
         btnRegistrarFacebook=(Button)findViewById(R.id.btnRegistroFacebook);
 
 
@@ -77,6 +78,30 @@ public class RegistroUsuarioActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 registroUsuario();
+            }
+        });
+
+        btnRegistrarFacebook.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(event.getAction() == MotionEvent.ACTION_DOWN){
+                    v.getBackground().setAlpha(150);
+                }else if(event.getAction() == MotionEvent.ACTION_UP){
+                    v.getBackground().setAlpha(255);
+                }
+                return false;
+            }
+        });
+
+        btnAceptar.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(event.getAction() == MotionEvent.ACTION_DOWN){
+                    v.getBackground().setAlpha(150);
+                }else if(event.getAction() == MotionEvent.ACTION_UP){
+                    v.getBackground().setAlpha(255);
+                }
+                return false;
             }
         });
 
@@ -135,11 +160,11 @@ public class RegistroUsuarioActivity extends AppCompatActivity {
 
 
 
-        db.collection("Usuarios").document("Santiago").set(usuario)
+        db.collection("Usuario").document(email).set(usuario)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Toast.makeText(RegistroUsuarioActivity.this,"¡Se ha registrado con éxito!",Toast.LENGTH_LONG);
+                        Toast.makeText(RegistroUsuarioActivity.this,"¡Se ha registrado con éxito!",Toast.LENGTH_LONG).show();
 
                         Intent intent = new Intent(RegistroUsuarioActivity.this, MainActivity.class);
 
@@ -150,34 +175,11 @@ public class RegistroUsuarioActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(@NonNull Exception e) {
 
-                        Toast.makeText(RegistroUsuarioActivity.this,"Error al registrar usuario",Toast.LENGTH_LONG);
+                        Toast.makeText(RegistroUsuarioActivity.this,"Error al registrar usuario",Toast.LENGTH_LONG).show();
                         Log.d(TAG,e.toString());
 
                     }
                 });
-/*
-
-        Map<String, Object> city = new HashMap<>();
-        city.put("name", "Los Angeles");
-        city.put("state", "CA");
-        city.put("country", "USA");
-
-        db.collection("cities").document("LA")
-                .set(city)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "DocumentSnapshot successfully written!");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error writing document", e);
-                    }
-                });
-
-        */
 
 
     }
